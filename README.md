@@ -11,7 +11,7 @@ This is a simple Docker-based mock CRM that returns business data from a JSON fi
 ### Pull the Docker image
 
 ```bash
-docker pull ghcr.io/bynned/mockcrm:latest
+docker pull ghcr.io/bynned/mockrm:latest
 ```
 
 ### Create your data file
@@ -40,7 +40,7 @@ Create a `data.json` file with your business data:
 docker run -d \
   -p 3000:3000 \
   -v $(pwd)/data.json:/app/data.json \
-  ghcr.io/bynned/mockcrm:latest
+  ghcr.io/bynned/mockrm:latest
 ```
 
 ### Docker Compose
@@ -51,7 +51,7 @@ Add this to your `docker-compose.yml`:
 version: '3.8'
 services:
   mock-crm:
-    image: ghcr.io/bynned/mockcrm:latest
+    image: ghcr.io/bynned/mockrm:latest
     ports:
       - '3000:3000'
     volumes:
