@@ -1,9 +1,16 @@
 const express = require('express');
 const logger = require('./utils/logger');
 const businessData = require('../data.json');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || '*',
+};
+
+app.use(cors(corsOptions));
 
 app.get(`${businessData.endpoint}/:businessId`, (req, res) => {
   const { businessId } = req.params;

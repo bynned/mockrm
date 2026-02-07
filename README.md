@@ -54,6 +54,8 @@ services:
     image: ghcr.io/bynned/mockrm:latest
     ports:
       - '3000:3000'
+    environment:
+      - CORS_ORIGIN=https://myapp.com
     volumes:
       - ./data.json:/app/data.json
 ```
