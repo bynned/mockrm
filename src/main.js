@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('./utils/logger');
-const businessData = require('../data.json');
 const cors = require('cors');
+const { loadBusinessData } = require('./utils/dataLoader');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +11,13 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+let businessData;
+try {
+  businessData = loadBusinessData();
+} catch (error) {
+  process.exit(1);
+}
 
 app.get(`${businessData.endpoint}/:businessId`, (req, res) => {
   const { businessId } = req.params;
@@ -31,4 +38,5 @@ app.get(`${businessData.endpoint}/:businessId`, (req, res) => {
 app.listen(PORT, () => {
   logger.info(`Server is listening on port ${PORT}`);
   logger.info(`Endpoint: ${businessData.endpoint}/:businessId`);
+  logger.debug(`CORS origin: ${corsOptions.origin}`);
 });
