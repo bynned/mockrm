@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mockrm Console</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; }
+    h1 { font-size: 1.2rem; margin-bottom: 20px; color: #9cdcfe; letter-spacing: 0.05em; }
+    form { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 12px; }
+    textarea { width: 100%; height: 500px; background: #252526; color: #ce9178; border: 1px solid #3c3c3c; border-radius: 6px; padding: 16px; font-size: 0.9rem; font-family: monospace; resize: vertical; outline: none; line-height: 1.6; }
+    textarea:focus { border-color: #007acc; }
+    .actions { display: flex; gap: 10px; align-items: center; }
+    button { background: #0e639c; color: white; border: none; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+    button:hover { background: #1177bb; }
+    .message { font-size: 0.85rem; padding: 6px 12px; border-radius: 4px; }
+    .message.success { background: #1e3a1e; color: #4ec94e; border: 1px solid #2d5a2d; }
+    .message.error { background: #3a1e1e; color: #f44747; border: 1px solid #5a2d2d; }
+  </style>
+</head>
+<body>
+  <h1>Mockrm data editor</h1>
+  <form method="POST" action="/console" id="editorForm">
+    <textarea name="jsonData" id="jsonData" spellcheck="false"><%= jsonData %></textarea>
+    <div class="actions">
+      <button type="submit">Save</button>
+      <% if (message) { %>
+        <span class="message <%= messageType %>"><%= message %></span>
+      <% } %>
+    </div>
+  </form>
+
+  <script>
+    document.getElementById('editorForm').addEventListener('submit', function(e) {
+      try {
+        JSON.parse(document.getElementById('jsonData').value);
+      } catch (err) {
+        e.preventDefault();
+        alert('Invalid JSON: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
