@@ -2,9 +2,12 @@ const express = require('express');
 const logger = require('./utils/logger');
 const cors = require('cors');
 const { loadBusinessData } = require('./utils/dataLoader');
-
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || '*',
@@ -18,6 +21,10 @@ try {
 } catch (error) {
   process.exit(1);
 }
+
+app.get('/console', (req, res) => {
+  res.render('index', { message: 'Hello' });
+});
 
 app.get(`${businessData.endpoint}/:businessId`, (req, res) => {
   const { businessId } = req.params;
